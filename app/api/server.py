@@ -13,9 +13,6 @@ app = FastAPI(
     version="0.1.0",
 )
 
-# API prefix from environment variables
-api_prefix = os.getenv("API_PREFIX", "/api/v1")
-
 @app.get("/")
 async def root():
     return {"message": "Welcome to Ropolitiko API"}
