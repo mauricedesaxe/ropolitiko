@@ -12,6 +12,7 @@ def get_env(key: str, default=None):
 
 # Define required environment variables (these will fail if not present)
 SCRAPING_BEE_API_KEY = get_env("SCRAPING_BEE_API_KEY")
+DATABASE_URL = get_env("DATABASE_URL", "postgresql://@localhost/ropolitiko")
 
 # Define optional environment variables with defaults
 # OTHER_API_KEY = get_env("OTHER_API_KEY", "")
