@@ -1,7 +1,6 @@
 import pytest
 from app.scraper.protv import ProTVArticleScraper
 from app.scraper.scraping_bee import sbclient
-import pprint
 
 def test_protv_article_scraper_page_1():
     """Test that ProTVArticleScraper can extract articles properly"""
