@@ -1,27 +1,37 @@
 from sqlmodel import Field, Session, SQLModel, create_engine
 from app.env import DATABASE_URL
 from datetime import datetime
+from enum import Enum
 
-class NewsArticle(SQLModel, table=True):
-    __tablename__ = "news_articles"
+class ArticleStatus(str, Enum):
+    PENDING = "pending"
+    PROCESSING = "processing"
+    FAILED = "failed"
+    COMPLETED = "completed"
+
+class Article(SQLModel, table=True):
+    __tablename__ = "articles"
     id: int = Field(default=None, primary_key=True)
     title: str
     url: str = Field(unique=True)
+    image_url: str | None = Field(default=None)
     source: str
-    content: str
-    published_at: datetime
-    scraped_at: datetime = Field(default_factory=datetime.now)
-    processed: bool = Field(default=False)
+    content: str | None = Field(default=None)
+    published_at: datetime | None = Field(default=None)
+    lead: str | None = Field(default=None)
+    status: ArticleStatus = Field(default=ArticleStatus.PENDING)
+    error_message: str | None = Field(default=None)
+    created_at: datetime = Field(default_factory=datetime.now)
+    updated_at: datetime = Field(default_factory=datetime.now)
 
 engine = create_engine(DATABASE_URL)
 SQLModel.metadata.create_all(engine)
 
-class NewsArticleRepository:
+class ArticleRepository:
     def __init__(self):
         self.engine = create_engine(DATABASE_URL)
         SQLModel.metadata.create_all(self.engine)
 
-    def get_news_article(self, news_article_id: int):
+    def get_article(self, article_id: int):
         with Session(self.engine) as session:
-            return session.get(NewsArticle, news_article_id)
-    
+            return session.get(Article, article_id)
