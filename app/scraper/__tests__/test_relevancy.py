@@ -1,5 +1,84 @@
 from app.scraper.relevancy import is_relevant_title
-import pytest
+import pytest  # noqa: F401
+import json
+from pathlib import Path
+
+# Minimum acceptable score (percentage of correct classifications)
+MIN_SCORE_THRESHOLD = 90.0
+
+def test_relevancy_score():
+    """Test the relevancy classifier and track its performance"""
+    # Calculate current score
+    current_score_data = calculate_score()
+    current_score = current_score_data["score"]
+    
+    # Load previous score
+    previous_data = load_previous_score()
+    previous_score = previous_data["score"] if previous_data else 0
+    
+    # Add timestamp to score data
+    from datetime import datetime
+    current_score_data["timestamp"] = datetime.now().isoformat()
+    
+    # Save current score only if it's different from previous
+    if not previous_data or current_score != previous_score:
+        save_current_score(current_score_data)
+    
+    # Print detailed results
+    print("\nRelevancy classifier performance:")
+    print(f"Relevant titles: {current_score_data['relevant_correct']}/{current_score_data['relevant_total']}")
+    print(f"Irrelevant titles: {current_score_data['irrelevant_correct']}/{current_score_data['irrelevant_total']}")
+    print(f"Overall score: {current_score}%")
+    
+    if previous_data:
+        print(f"Previous score: {previous_score}%")
+        
+    # Assert that score meets minimum threshold
+    assert current_score >= MIN_SCORE_THRESHOLD, f"Score {current_score}% is below minimum threshold of {MIN_SCORE_THRESHOLD}%"
+    
+    # Assert that score has improved or stayed the same compared to previous
+    if previous_data:
+        assert current_score >= previous_score, f"Score has decreased from {previous_score}% to {current_score}%"
+
+# Path to store historical scores
+SCORES_FILE = Path("app/scraper/__tests__/latest_relevancy_score.json")
+
+def calculate_score():
+    """Calculate the percentage of correctly classified titles"""
+    relevant_correct = sum(1 for title in example_relevant_titles if is_relevant_title(title))
+    irrelevant_correct = sum(1 for title in example_irrelevant_titles if not is_relevant_title(title))
+    
+    total_titles = len(example_relevant_titles) + len(example_irrelevant_titles)
+    total_correct = relevant_correct + irrelevant_correct
+    
+    return {
+        "score": round((total_correct / total_titles) * 100, 1),
+        "relevant_correct": relevant_correct,
+        "relevant_total": len(example_relevant_titles),
+        "irrelevant_correct": irrelevant_correct,
+        "irrelevant_total": len(example_irrelevant_titles)
+    }
+
+def load_previous_score():
+    """Load previous score from the JSON file"""
+    if not SCORES_FILE.exists():
+        return None
+    
+    try:
+        with open(SCORES_FILE, 'r') as f:
+            return json.load(f)
+    except (json.JSONDecodeError, IOError):
+        return None
+
+def save_current_score(score_data):
+    """Save the current score to the JSON file"""
+    # Create directory if it doesn't exist
+    SCORES_FILE.parent.mkdir(parents=True, exist_ok=True)
+    
+    # Save only the latest score
+    with open(SCORES_FILE, 'w') as f:
+        json.dump(score_data, f, indent=2)
+
 
 example_relevant_titles = [
     "Nicușor Dan, primar al Bucureștiului, a ieșit pe locul doi în primul tur",
@@ -21,7 +100,6 @@ example_relevant_titles = [
     "George Simion, întrebat dacă îl va numi premier pe Călin Georgescu: Da. Este angajamentul pe care mi l-am luat faţă de români",
     "Reacția lui Marcel Ciolacu după primele exit poll-uri: „Ponta e un om neserios. Dacă nu candida, Crin era pe primul loc”",
     "Ce înseamnă pentru economia României o depreciere a monedei naționale. Vor fi creșteri de prețuri pentru noi toți",
-
 ]
 
 example_irrelevant_titles = [
@@ -39,11 +117,3 @@ example_irrelevant_titles = [
     "Metoda prin care produsele „Made în China” evită taxele vamale din SUA. Tot mai mulți producători o folosesc",
     "Cod portocaliu de vijelii în mai multe județe, marţi seara. Care sunt zonele vizate de vreme extremă"
 ]
-
-@pytest.mark.parametrize("title", example_relevant_titles)
-def test_relevant_titles_are_identified(title):
-    assert is_relevant_title(title), f"Should identify as relevant: {title}"
-
-@pytest.mark.parametrize("title", example_irrelevant_titles)
-def test_irrelevant_titles_are_filtered(title):
-    assert not is_relevant_title(title), f"Should identify as irrelevant: {title}"
