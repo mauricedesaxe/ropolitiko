@@ -95,3 +95,30 @@ class ProTVArticleScraper:
         except Exception as e:
             logging.exception(f"Error in ProTVArticleScraper: {str(e)}")
             raise
+
+    def scrape_article_content(self, url: str) -> str:
+        """
+        Scrape the content of an article from PRO TV.
+        
+        Args:
+            url (str): The URL of the article to scrape. 
+            An example URL is https://stirileprotv.ro/stiri/actualitate/ce-spun-ungurii-despre-rezultatul-alegerilor-prezidentiale-din-romania-l-au-descris-pe-george-simion-intr-un-singur-cuvant.html
+
+        Returns:
+            str: The content of the article.
+        """
+        try:
+            response = sbclient.get(url)
+            if response.status_code == 402:
+                logging.error("ScrapingBee API credits exhausted")
+                raise Exception("ScrapingBee API credits exhausted")
+            elif response.status_code != 200:
+                logging.error(f"Failed to fetch data: HTTP {response.status_code}")
+                raise Exception(f"Failed to fetch data: HTTP {response.status_code}")
+
+            soup = BeautifulSoup(response.content, 'html.parser')
+            content = soup.find("div", class_="article--text")
+            return content.text.strip() if content else ""
+        except Exception as e:
+            logging.exception(f"Error in ProTVArticleScraper: {str(e)}")
+            raise

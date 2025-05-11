@@ -47,3 +47,24 @@ def test_protv_article_scraper_page_2():
     assert all(["url" in article for article in articles])
     assert all(["source" in article for article in articles])
 
+def test_scrape_article_content():
+    """Test that article content can be extracted from a PRO TV article"""
+    # Check API access first
+    try:
+        response = sbclient.get("https://www.protv.ro")
+        if response.status_code != 200:
+            pytest.skip(f"Skipping test: ScrapingBee API returned {response.status_code}")
+    except Exception as e:
+        pytest.skip(f"Skipping test: ScrapingBee API error - {str(e)}")
+    
+    # If API is working, test the content scraper
+    scraper = ProTVArticleScraper()
+    test_url = "https://stirileprotv.ro/stiri/actualitate/ce-spun-ungurii-despre-rezultatul-alegerilor-prezidentiale-din-romania-l-au-descris-pe-george-simion-intr-un-singur-cuvant.html"
+    content = scraper.scrape_article_content(test_url)
+    
+    # Verify we got content
+    assert isinstance(content, str)
+    assert len(content) > 0, "No article content found"
+    
+    # Print sample of content for debugging
+    print(f"Content sample: {content[:150]}...")
