@@ -24,3 +24,12 @@ A FastAPI application that scrapes Romanian political news, classifies them usin
    ```
 2. The API will be available at http://localhost:8000
 3. Visit http://localhost:8000/docs for the interactive API documentation
+
+## Adding dependencies
+
+Use the `./scripts/install.sh` script to install a package and update the `requirements.txt` file with the locked version.
+
+```
+./scripts/install.sh PACKAGE_NAME
+```
+
