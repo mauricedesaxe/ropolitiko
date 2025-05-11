@@ -15,7 +15,7 @@ def test_protv_article_scraper_page_1():
     
     # If we get here, API is working
     scraper = ProTVArticleScraper()
-    articles = scraper.scrape_article_list_from_page(page=1)
+    articles = scraper.scrape_article_list_from_top_read(page=1)
     
     # Verify we got some articles
     assert len(articles) > 0, "No articles found"
@@ -41,7 +41,7 @@ def test_protv_article_scraper_page_2():
     
     # If we get here, API is working
     scraper = ProTVArticleScraper()
-    articles = scraper.scrape_article_list_from_page(page=2)
+    articles = scraper.scrape_article_list_from_top_read(page=2)
     
     # Verify we got some articles
     assert len(articles) > 0, "No articles found"

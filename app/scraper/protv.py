@@ -2,18 +2,19 @@ from bs4 import BeautifulSoup
 from app.scraper.scraping_bee import sbclient
 import logging
 from app.scraper.title_relevancy import is_relevant_title
+
 class ProTVArticleScraper:
-    BASE_URL = "https://www.protv.ro/"
+    BASE_URL = "https://stirileprotv.ro/"
     
-    def scrape_article_list_from_page(self, page: int = 1, filter_irrelevant=True):
+    def scrape_article_list_from_top_read(self, page: int = 1, filter_irrelevant=True):
         """
         Scrape articles from PRO TV website.
         Returns a list of article data dictionaries for future processing.
         Note: This function does not scrape the article content, only the list of articles.
         """
         try:
-            # https://www.protv.ro/articole/pagina-1
-            response = sbclient.get(self.BASE_URL + f"articole/pagina-{page}")
+            # https://stirileprotv.ro/top-citite/?page=1
+            response = sbclient.get(self.BASE_URL + f"top-citite/?page={page}")
             
             if response.status_code == 402:
                 logging.error("ScrapingBee API credits exhausted")
@@ -30,28 +31,28 @@ class ProTVArticleScraper:
             article_elements = soup.find_all("article")
             
             for article in article_elements:
+                # Extract the URL
+                link_element = article.find("a")
+                url = link_element.get("href") if link_element else None
+                
                 # Extract the title
-                title_element = article.find("h3")
+                title_element = article.find("h2")
                 if not title_element:
                     continue
                     
-                title = title_element.text.strip()
-                
-                # Extract the URL if available
-                link_element = title_element.find("a") or article.find("a")
-                url = link_element.get("href") if link_element else None
+                title = title_element.text.strip() if title_element else None
                 
                 # Extract image URL if available
-                img_element = article.find("img")
+                img_element = article.select_one("picture img")
                 image_url = img_element.get("src") if img_element else None
 
-                # Extract published_at if available
-                published_at_element = article.find("time")
-                published_at = published_at_element.get("datetime") if published_at_element else None
+                # Extract published date if available
+                date_element = article.find("div", class_="article-date")
+                published_at = date_element.text.strip() if date_element else None
 
-                # Extract category if available
-                category_element = article.find("a", class_="category-link")
-                category = category_element.text.strip() if category_element else None
+                # Extract lead/summary if available
+                lead_element = article.find("div", class_="article-lead")
+                lead = lead_element.text.strip() if lead_element else None
 
                 # Add the article data to our list
                 articles.append({
@@ -60,7 +61,7 @@ class ProTVArticleScraper:
                     "image_url": image_url,
                     "source": "PRO TV",
                     "published_at": published_at,
-                    "category": category,
+                    "lead": lead,
                 })
                 
             # After gathering all articles, filter them
