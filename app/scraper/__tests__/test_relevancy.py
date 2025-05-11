@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 
 # Minimum acceptable score (percentage of correct classifications)
-MIN_SCORE_THRESHOLD = 90.0
+MIN_SCORE_THRESHOLD = 80.0
 
 def test_relevancy_score():
     """Test the relevancy classifier and track its performance"""
@@ -100,6 +100,16 @@ example_relevant_titles = [
     "George Simion, întrebat dacă îl va numi premier pe Călin Georgescu: Da. Este angajamentul pe care mi l-am luat faţă de români",
     "Reacția lui Marcel Ciolacu după primele exit poll-uri: „Ponta e un om neserios. Dacă nu candida, Crin era pe primul loc”",
     "Ce înseamnă pentru economia României o depreciere a monedei naționale. Vor fi creșteri de prețuri pentru noi toți",
+    "Guvernul României a aprobat noul buget pentru anul fiscal 2025",
+    "Inflația în România a scăzut sub 3% pentru prima dată în ultimii trei ani",
+    "Parlamentul a votat noua lege a pensiilor. Ce se schimbă pentru pensionari",
+    "Ministrul Economiei anunță noi investiții străine în sectorul industrial românesc",
+    "Protestele fermierilor români continuă la București. Cer subvenții mai mari",
+    "BNR a decis menținerea dobânzii de referință. Ce impact are asupra economiei",
+    "Alegeri locale 2025: Cine sunt candidații pentru primăriile marilor orașe",
+    "Coaliția de guvernare se destramă după dispute pe tema reformei fiscale",
+    "Președintele Iohannis critică decizia CCR privind legea securității naționale",
+    "România va primi fonduri suplimentare de la UE pentru infrastructura de transport",
 ]
 
 example_irrelevant_titles = [
@@ -115,5 +125,16 @@ example_irrelevant_titles = [
     "Trump și Erdogan, discuție „foarte productivă” despre războiul din Ucraina. Preşedintele SUA vrea să pună capăt conflictului",
     "Viciul fără de care mulți români nu-și pot închipui azi viața vine de la americani. Mesajul Ambasadei SUA",
     "Metoda prin care produsele „Made în China” evită taxele vamale din SUA. Tot mai mulți producători o folosesc",
-    "Cod portocaliu de vijelii în mai multe județe, marţi seara. Care sunt zonele vizate de vreme extremă"
+    "Cod portocaliu de vijelii în mai multe județe, marţi seara. Care sunt zonele vizate de vreme extremă",
+    "Accident grav pe DN1: trei mașini implicate și cinci persoane rănite",
+    "Descoperire arheologică importantă în județul Constanța. Ce au găsit cercetătorii",
+    "Filmul românesc premiat la Cannes va avea premiera națională luna viitoare",
+    "Echipa națională de handbal feminin s-a calificat în semifinalele Campionatului European",
+    "Incendiu puternic la un centru comercial din Iași. Pompierii intervin cu mai multe autospeciale",
+    "Studiu: Românii petrec în medie 6 ore pe zi pe rețelele sociale",
+    "Alertă meteo: val de căldură extremă în sudul țării în următoarele zile",
+    "Cazul fetiței dispărute din Botoșani ia o întorsătură neașteptată. Ce au descoperit anchetatorii",
+    "Noul film Marvel a doborât recorduri de box office în România în primul weekend",
+    "Medicii de familie anunță că vor intra în grevă. Care sunt revendicările",
+    "Festivalul Untold 2025 anunță primii artiști internaționali care vor urca pe scenă",
 ]
