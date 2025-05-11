@@ -37,16 +37,21 @@ def clean_article_content(raw_content: str, metadata: ArticleData = None) -> str
         - Footer information
 
         Format as markdown with:
-        - Preserve paragraph structure
-        - Maintain any lists or quotes
+        - EXACTLY preserve the original paragraph structure without reorganizing
+        - Keep paragraphs in their original order
+        - Maintain any lists or quotes exactly as they appear
         - Format subheadings appropriately
 
         The content shall remain in the same language as the original content.
 
-        Do not include any preamble or introduction. Simply provide the cleaned content.
-        
-        Ensure the content is useful for LLMs to understand and analyze.
-        
+        IMPORTANT RULES:
+        - Do NOT add ANY information that is not present in the original content
+        - Do NOT reorganize paragraphs or sections
+        - Do NOT alter the original flow of content
+        - Do NOT expand on any topics beyond what's in the original
+        - Do NOT include any preamble, introduction, or summary
+        - Simply provide the cleaned content maintaining its exact structure
+
         {metadata_prompt}
         
         Raw content:
