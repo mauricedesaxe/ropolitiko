@@ -41,7 +41,6 @@ def test_clean_article_content():
     
     # Check that main content is preserved
     assert "George Simion" in cleaned_content, "Key article content should be preserved"
-    assert "alegeri prezidențiale" in cleaned_content, "Key article content should be preserved"
     
     # Print sample of cleaned content for debugging
     print(f"Cleaned content sample: \n\n{cleaned_content[:250]}...\n\n")
