@@ -2,15 +2,35 @@ from bs4 import BeautifulSoup
 from app.scraper.scraping_bee import sbclient
 import logging
 from app.scraper.title_relevancy import is_relevant_title
+from typing import List, TypedDict, Optional
+
+class ArticleData(TypedDict):
+    title: str
+    url: str
+    image_url: Optional[str]
+    source: str
+    published_at: Optional[str]
+    lead: Optional[str]
 
 class ProTVArticleScraper:
     BASE_URL = "https://stirileprotv.ro/"
     
-    def scrape_article_list_from_top_read(self, page: int = 1, filter_irrelevant=True):
+    def scrape_article_list_from_top_read(self, page: int = 1, filter_irrelevant=True) -> List[ArticleData]:
         """
         Scrape articles from PRO TV website.
         Returns a list of article data dictionaries for future processing.
         Note: This function does not scrape the article content, only the list of articles.
+        
+        Returns:
+            List[ArticleData]: A list of dictionaries with the following structure:
+                {
+                    "title": str,           # The article title
+                    "url": str,             # The article URL
+                    "image_url": str | None, # URL to the article's image (if available)
+                    "source": str,          # Always "PRO TV"
+                    "published_at": str | None, # Publication date/time (if available)
+                    "lead": str | None,     # Article summary/lead paragraph (if available)
+                }
         """
         try:
             # https://stirileprotv.ro/top-citite/?page=1
@@ -24,8 +44,8 @@ class ProTVArticleScraper:
                 raise Exception(f"Failed to fetch data: HTTP {response.status_code}")
                 
             soup = BeautifulSoup(response.content, 'html.parser')
-            articles = []
-            relevant_articles = []
+            articles: List[ArticleData] = []
+            relevant_articles: List[ArticleData] = []
             
             # Find all article elements
             article_elements = soup.find_all("article")
