@@ -3,3 +3,7 @@ __pycache__/
 *$py.class
 .venv/
 .env
+.testmondata
+.testmondata-shm
+.testmondata-wal
+.pytest_cache/
