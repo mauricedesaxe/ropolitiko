@@ -25,10 +25,6 @@ def test_protv_article_scraper_page_1():
     assert all(["url" in article for article in articles])
     assert all(["source" in article for article in articles])
 
-    # Print a few things for debugging
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(articles[0])
-
 def test_protv_article_scraper_page_2():
     """Test that ProTVArticleScraper can extract articles properly"""
     # Check API access first
@@ -51,6 +47,3 @@ def test_protv_article_scraper_page_2():
     assert all(["url" in article for article in articles])
     assert all(["source" in article for article in articles])
 
-    # Print a few things for debugging
-    pp = pprint.PrettyPrinter(indent=4)
-    pp.pprint(articles[0])
