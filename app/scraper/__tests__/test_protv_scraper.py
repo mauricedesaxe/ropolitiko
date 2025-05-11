@@ -67,4 +67,4 @@ def test_scrape_article_content():
     assert len(content) > 0, "No article content found"
     
     # Print sample of content for debugging
-    print(f"Content sample: {content[:150]}...")
+    print(f"Content sample: \n\n{content[:250]}...\n\n")
