@@ -1,9 +1,11 @@
-from ollama import Client
+from openai import OpenAI
 import logging
 from app.scraper.protv import ArticleData
+from app.env import OPENAI_API_KEY
 
-client = Client()
-LLM_MODEL = "llama3"  
+# Initialize OpenAI client with API key from environment
+client = OpenAI(api_key=OPENAI_API_KEY)
+LLM_MODEL = "gpt-4o" 
 
 def clean_article_content(raw_content: str, metadata: ArticleData = None) -> str:
     """
@@ -58,8 +60,12 @@ def clean_article_content(raw_content: str, metadata: ArticleData = None) -> str
         {raw_content}
         """
         
-        response = client.generate(model=LLM_MODEL, prompt=prompt)
-        return response['response'].strip()
+        response = client.chat.completions.create(
+            model=LLM_MODEL,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=0.0
+        )
+        return response.choices[0].message.content.strip()
     except Exception as e:
         logging.exception(f"Error cleaning article content: {str(e)}")
         # Return original content as fallback

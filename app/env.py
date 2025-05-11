@@ -13,6 +13,7 @@ def get_env(key: str, default=None):
 # Define required environment variables (these will fail if not present)
 SCRAPING_BEE_API_KEY = get_env("SCRAPING_BEE_API_KEY")
 DATABASE_URL = get_env("DATABASE_URL", "postgresql://@localhost/ropolitiko")
+OPENAI_API_KEY = get_env("OPENAI_API_KEY")
 
 # Define optional environment variables with defaults
 # OTHER_API_KEY = get_env("OTHER_API_KEY", "")
@@ -23,6 +24,7 @@ def validate_env_vars():
     print("Running validate_env_vars")
     required_vars = [
         "SCRAPING_BEE_API_KEY",
+        "OPENAI_API_KEY",
         # Add other required environment variables here
     ]
     

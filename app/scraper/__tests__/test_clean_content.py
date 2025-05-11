@@ -115,5 +115,9 @@ def evaluate_content_quality(raw_content, cleaned_content, criteria):
     For each criterion, respond with only "PASS" or "FAIL" followed by brief explanation.
     """
     
-    response = client.generate(model=LLM_MODEL, prompt=prompt)
-    return response['response'].strip()
+    response = client.chat.completions.create(
+        model=LLM_MODEL,
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.0
+    )
+    return response.choices[0].message.content.strip()
