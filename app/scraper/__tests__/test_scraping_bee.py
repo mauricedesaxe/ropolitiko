@@ -30,7 +30,3 @@ def test_scraping_bee_basic_protv_request():
     article_titles = [a.find("h3") for a in articles if a.find("h3")]
     assert len(article_titles) > 0, "No article titles found"
     
-    # Print first few article titles for verification (helpful for debugging)
-    print("\nExtracted article titles:")
-    for i, title in enumerate(article_titles[:3]):
-        print(f"{i+1}. {title.text.strip()}")
