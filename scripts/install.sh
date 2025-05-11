@@ -1,5 +1,4 @@
 #!/bin/bash
-# scripts/pip-add.sh - Simple UV package manager
 
 if [ $# -eq 0 ]; then
   echo "Usage: ./scripts/install.sh PACKAGE_NAME"
