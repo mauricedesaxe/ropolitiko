@@ -10,5 +10,28 @@ def get_env(key: str, default=None):
         raise ValueError(f"Environment variable {key} is not set")
     return os.getenv(key, default)
 
-# Commonly used environment variables
-SCRAPING_BEE_API_KEY = get_env("SCRAPING_BEE_API_KEY", "")
+# Define required environment variables (these will fail if not present)
+SCRAPING_BEE_API_KEY = get_env("SCRAPING_BEE_API_KEY")
+
+# Define optional environment variables with defaults
+# OTHER_API_KEY = get_env("OTHER_API_KEY", "")
+
+# Validate required environment variables on import
+def validate_env_vars():
+    """Validate all required environment variables are set"""
+    print("Running validate_env_vars")
+    required_vars = [
+        "SCRAPING_BEE_API_KEY",
+        # Add other required environment variables here
+    ]
+    
+    missing_vars = []
+    for var in required_vars:
+        if var not in os.environ:
+            missing_vars.append(var)
+    
+    if missing_vars:
+        raise ValueError(f"Required environment variables not set: {', '.join(missing_vars)}")
+
+# Run validation on module import
+validate_env_vars()

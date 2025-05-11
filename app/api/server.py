@@ -1,10 +1,6 @@
-import os
 from fastapi import FastAPI
-from dotenv import load_dotenv
 import psutil
-
-# Load environment variables
-load_dotenv()
+from app.env import validate_env_vars
 
 # Create FastAPI app
 app = FastAPI(
