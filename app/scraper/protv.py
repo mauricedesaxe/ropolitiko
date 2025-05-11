@@ -1,11 +1,11 @@
 from bs4 import BeautifulSoup
 from app.scraper.scraping_bee import sbclient
 import logging
-
+from app.scraper.relevancy import is_relevant_title
 class ProTVArticleScraper:
     BASE_URL = "https://www.protv.ro/"
     
-    def scrape_article_list_from_page(self, page: int = 1):
+    def scrape_article_list_from_page(self, page: int = 1, filter_irrelevant=True):
         """
         Scrape articles from PRO TV website.
         Returns a list of article data dictionaries for future processing.
@@ -24,6 +24,7 @@ class ProTVArticleScraper:
                 
             soup = BeautifulSoup(response.content, 'html.parser')
             articles = []
+            relevant_articles = []
             
             # Find all article elements
             article_elements = soup.find_all("article")
@@ -62,6 +63,13 @@ class ProTVArticleScraper:
                     "category": category,
                 })
                 
+            # After gathering all articles, filter them
+            if filter_irrelevant:
+                for article in articles:
+                    if is_relevant_title(article["title"]):
+                        relevant_articles.append(article)
+                return relevant_articles
+            
             return articles
         except Exception as e:
             logging.exception(f"Error in ProTVArticleScraper: {str(e)}")
