@@ -5,10 +5,11 @@ import logging
 class ProTVArticleScraper:
     BASE_URL = "https://www.protv.ro/"
     
-    def scrape_articles(self, page: int = 1):
+    def scrape_article_list_from_page(self, page: int = 1):
         """
-        Scrape articles from PRO TV website
-        Returns a list of article data dictionaries
+        Scrape articles from PRO TV website.
+        Returns a list of article data dictionaries for future processing.
+        Note: This function does not scrape the article content, only the list of articles.
         """
         try:
             # https://www.protv.ro/articole/pagina-1
