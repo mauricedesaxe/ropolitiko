@@ -2,7 +2,7 @@ import pytest  # noqa: F401
 from app.scraper.scraping_bee import sbclient
 from bs4 import BeautifulSoup
 
-def test_scraping_bee_protv():
+def test_scraping_bee_basic_protv_request():
     """Test that ScrapingBee can successfully scrape protv.ro/articole and extract content"""
     # Make the request to ProTV articles page
     response = sbclient.get("https://www.protv.ro/articole")
