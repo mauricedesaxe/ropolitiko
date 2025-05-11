@@ -3,6 +3,7 @@ from app.env import DATABASE_URL
 from datetime import datetime
 
 class NewsArticle(SQLModel, table=True):
+    __tablename__ = "news_articles"
     id: int = Field(default=None, primary_key=True)
     title: str
     url: str = Field(unique=True)
