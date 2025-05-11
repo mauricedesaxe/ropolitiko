@@ -1,5 +1,5 @@
 # tests/test_server.py
-import pytest
+import pytest  # noqa: F401
 import unittest.mock
 
 def test_root_endpoint(client):

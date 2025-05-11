@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import psutil
-from app.env import validate_env_vars
+from app.env import validate_env_vars  # noqa: F401
 
 # Create FastAPI app
 app = FastAPI(
