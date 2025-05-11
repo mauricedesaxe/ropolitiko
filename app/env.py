@@ -10,4 +10,5 @@ def get_env(key: str, default=None):
 
 # Commonly used environment variables
 API_PREFIX = get_env("API_PREFIX", "/api/v1")
+SCRAPING_BEE_API_KEY = get_env("SCRAPING_BEE_API_KEY", "")
 NEWS_SOURCES = get_env("NEWS_SOURCES", "").split(",") 
