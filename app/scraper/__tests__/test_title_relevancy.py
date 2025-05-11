@@ -1,4 +1,4 @@
-from app.scraper.relevancy import is_relevant_title
+from app.scraper.title_relevancy import is_relevant_title
 import pytest  # noqa: F401
 import json
 from pathlib import Path

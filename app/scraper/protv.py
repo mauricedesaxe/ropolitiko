@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 from app.scraper.scraping_bee import sbclient
 import logging
-from app.scraper.relevancy import is_relevant_title
+from app.scraper.title_relevancy import is_relevant_title
 class ProTVArticleScraper:
     BASE_URL = "https://www.protv.ro/"
     
