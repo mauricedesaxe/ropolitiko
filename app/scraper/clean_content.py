@@ -42,6 +42,8 @@ def clean_article_content(raw_content: str, metadata: ArticleData = None) -> str
         - Format subheadings appropriately
 
         The content shall remain in the same language as the original content.
+
+        Do not include any preamble or introduction. Simply provide the cleaned content.
         
         Ensure the content is useful for LLMs to understand and analyze.
         

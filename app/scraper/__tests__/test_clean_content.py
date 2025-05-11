@@ -101,7 +101,8 @@ def evaluate_content_quality(raw_content, cleaned_content, criteria):
     prompt = f"""
     You are judging the quality of content cleaning for news articles.
     The content shall remain in the same language as the original content.
-    
+    The judged content should not contain any preamble or introduction.
+
     RAW CONTENT SAMPLE:
     {raw_content[:1000]}...
     
