@@ -100,6 +100,7 @@ def evaluate_content_quality(raw_content, cleaned_content, criteria):
     """Use LLM to evaluate cleaned content quality"""
     prompt = f"""
     You are judging the quality of content cleaning for news articles.
+    The content shall remain in the same language as the original content.
     
     RAW CONTENT SAMPLE:
     {raw_content[:1000]}...

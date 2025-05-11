@@ -40,6 +40,8 @@ def clean_article_content(raw_content: str, metadata: ArticleData = None) -> str
         - Preserve paragraph structure
         - Maintain any lists or quotes
         - Format subheadings appropriately
+
+        The content shall remain in the same language as the original content.
         
         Ensure the content is useful for LLMs to understand and analyze.
         
