@@ -6,6 +6,8 @@ load_dotenv()
 
 def get_env(key: str, default=None):
     """Get environment variable or return default value"""
+    if default is None and key not in os.environ:
+        raise ValueError(f"Environment variable {key} is not set")
     return os.getenv(key, default)
 
 # Commonly used environment variables
