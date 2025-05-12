@@ -96,6 +96,7 @@ def test_clean_article_content_no_metadata(sample_file):
     # Check for failure indicators in evaluation
     assert "FAIL" not in evaluation, f"LLM evaluation failed for {sample_file}: {evaluation}"
 
+# TODO add some tests where the cleaned content is bad and see if the LLM-as-a-judge can catch it
 
 def evaluate_content_quality(raw_content, cleaned_content, criteria):
     """Use LLM to evaluate cleaned content quality"""
