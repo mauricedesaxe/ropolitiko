@@ -60,27 +60,28 @@ def test_clean_article_content():
     # Check for failure indicators in evaluation
     assert "FAIL" not in evaluation, f"LLM evaluation failed: {evaluation}"
 
-def test_clean_article_content_no_metadata():
-    """Test that the function works without metadata"""
-    # Load the sample content file
-    sample_file_path = os.path.join(
-        os.path.dirname(__file__), 
-        "raw_content_samples", 
-        "ce-spun-ungurii.txt"
-    )
+def get_sample_files():
+    """Helper function to get all sample files from the directory"""
+    sample_dir = os.path.join(os.path.dirname(__file__), "raw_content_samples")
+    return [f for f in os.listdir(sample_dir) if f.endswith('.txt')]
+
+@pytest.mark.parametrize("sample_file", get_sample_files())
+def test_clean_article_content_no_metadata(sample_file):
+    """Test that the function works without metadata for a specific sample file"""
+    sample_dir = os.path.join(os.path.dirname(__file__), "raw_content_samples")
+    sample_file_path = os.path.join(sample_dir, sample_file)
     
     try:
         with open(sample_file_path, 'r', encoding='utf-8') as f:
             raw_content = f.read()
     except Exception as e:
-        pytest.skip(f"Skipping test: Cannot read sample file - {str(e)}")
+        pytest.skip(f"Skipping test: Cannot read sample file {sample_file} - {str(e)}")
     
     # Clean the content without metadata
     cleaned_content = clean_article_content(raw_content)
     
     # Basic verification
-    assert cleaned_content, "Cleaned content should not be empty"
-    assert "George Simion" in cleaned_content, "Key article content should be preserved"
+    assert cleaned_content, f"Cleaned content for {sample_file} should not be empty"
     
     # LLM evaluation
     criteria = """
@@ -90,10 +91,10 @@ def test_clean_article_content_no_metadata():
     """
     
     evaluation = evaluate_content_quality(raw_content, cleaned_content, criteria)
-    print(f"LLM Evaluation (no metadata):\n{evaluation}")
+    print(f"LLM Evaluation for {sample_file} (no metadata):\n{evaluation}")
     
     # Check for failure indicators in evaluation
-    assert "FAIL" not in evaluation, f"LLM evaluation failed: {evaluation}"
+    assert "FAIL" not in evaluation, f"LLM evaluation failed for {sample_file}: {evaluation}"
 
 
 def evaluate_content_quality(raw_content, cleaned_content, criteria):
