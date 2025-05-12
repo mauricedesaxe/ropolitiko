@@ -67,3 +67,7 @@ def test_scrape_article_content():
     
     # Print sample of content for debugging
     print(f"Content sample: \n\n{content[:250]}...\n\n")
+
+    # write file to ./raw_content_samples/ce-spun-ungurii.txt
+    with open("app/scraper/__tests__/raw_content_samples/ce-spun-ungurii.txt", "w") as f:
+        f.write(content)
