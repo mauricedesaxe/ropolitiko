@@ -110,6 +110,10 @@ example_relevant_titles = [
     "Coaliția de guvernare se destramă după dispute pe tema reformei fiscale",
     "Președintele Iohannis critică decizia CCR privind legea securității naționale",
     "România va primi fonduri suplimentare de la UE pentru infrastructura de transport",
+    "Cine este George Simion, câștigător în primul tur la alegerile prezidențiale 2025. În diaspora, Europa l-a votat cel mai mult",
+    "Băsescu critică dur diaspora: „Ei trăiesc în Occident şi spun: voi care trăiţi acasă, ia treceţi către tătucu' Putin”",
+    "Kremlinul și-a anunțat oficial sprijinul pentru George Simion. Mesajul fantasmagoric transmis de ideologul lui Putin",
+    "Criza politică a dublat criza bugetară. BCE confirmă spargerea pragului psihologic de 5 lei pentru un euro, anunțată de BNR"
 ]
 
 example_irrelevant_titles = [
