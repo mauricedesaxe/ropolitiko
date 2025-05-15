@@ -1,6 +1,7 @@
 alembic==1.15.2
 annotated-types==0.7.0
 anyio==4.9.0
+apscheduler==3.11.0
 arq==0.26.3
 asyncpg==0.30.0
 beautifulsoup4==4.13.4
@@ -58,6 +59,7 @@ tenacity==9.1.2
 tqdm==4.67.1
 typing-extensions==4.13.2
 typing-inspection==0.4.0
+tzlocal==5.3.1
 unidecode==1.4.0
 urllib3==2.4.0
 uvicorn==0.34.2
