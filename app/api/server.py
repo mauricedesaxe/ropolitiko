@@ -11,8 +11,15 @@ async def lifespan(app: FastAPI):
         'upgrade', 'head',
     ]
     alembic.config.main(argv=alembic_args)
+    
+    # Start the scraping scheduler
+    from app.scraper.orchestration import start_scraping_scheduler, stop_scraping_scheduler
+    start_scraping_scheduler()
+    
     yield
-    # Clean up if needed
+    
+    # Stop the scheduler on shutdown
+    stop_scraping_scheduler()
 
 # Create FastAPI app
 app = FastAPI(
